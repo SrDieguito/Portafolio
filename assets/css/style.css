@@ -40,7 +40,7 @@
   );
   --bg-gradient-yellow-2: linear-gradient(
     135deg, 
-    hsla(45, 100%, 71%, 0.251) 0%, 
+    rgba(236, 168, 253, 0.582), 
     hsla(35, 100%, 68%, 0) 59.86%
   ), hsl(240, 2%, 13%);
   --border-gradient-onyx: linear-gradient(
@@ -167,15 +167,30 @@ body { background: var(--smoky-black); }
 
 .sidebar,
 article {
-  background: var(--eerie-black-2);
+  background: rgba(0, 0, 0, 0.425);
   border: 1px solid var(--jet);
   border-radius: 20px;
   padding: 15px;
   box-shadow: var(--shadow-1);
   z-index: 1;
+  overflow: hidden;
 }
 
-.separator {
+.sidebar::before,
+article::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: inherit; /* Toma el mismo fondo que el contenedor principal */
+    backdrop-filter: blur(5px); /* Aplica el desenfoque al fondo */
+    z-index: -1; /* Asegura que el pseudo-elemento esté detrás del contenido */
+    border-radius: inherit;
+  }
+
+    .separator {
   width: 100%;
   height: 1px;
   background: var(--jet);
@@ -1547,16 +1562,6 @@ textarea.form-input::-webkit-resizer { display: none; }
     gap: 20px 25px;
   }
 
-  /* testimonials */
-
-  .testimonials-item { min-width: calc(50% - 15px); }
-
-  /* clients */
-
-  .clients-item { min-width: calc(25% - 38px); }
-
-
-
   /**
    * PORTFOLIO
    */
@@ -1602,8 +1607,6 @@ textarea.form-input::-webkit-resizer { display: none; }
   body::-webkit-scrollbar-thumb:hover { background: hsla(0, 0%, 100%, 0.15); }
 
   body::-webkit-scrollbar-button { height: 60px; }
-
-
 
   /**
    * REUSED STYLE
@@ -1697,3 +1700,50 @@ textarea.form-input::-webkit-resizer { display: none; }
   .timeline-text { max-width: 700px; }
 
 }
+
+body {
+  background-image: url('dark-background.jpg'); /* Imagen de fondo para el modo oscuro */
+  background-size: cover; /* Esto hace que la imagen cubra todo el fondo, manteniendo la relación de aspecto */
+  background-position: center center; /* Centra la imagen */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  background-attachment: fixed; /* Hace que la imagen de fondo se mantenga fija cuando se hace scroll */
+  transition: background-image 0.5s ease, background-color 0.5s ease;
+  cursor: url('custom-cursor.png'), auto;  
+}
+
+
+body.lightmode {
+  background-image: url('light-background.jpg'); /* Imagen de fondo para el modo claro */
+}
+
+
+/* Estilo para el botón de modo claro/oscuro */
+#light {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px 10px;
+  background-color: hsla(0, 0%, 100%, 0.1);
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+/* Hover styles */
+#light:hover {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+body.lightmode #light {
+  background-color: hsl(0, 0%, 22%);
+  color: #ffffff;
+}
+
+body.lightmode #light:hover {
+  background-color: #000000;
+  color: #ffffff;
+}
+
